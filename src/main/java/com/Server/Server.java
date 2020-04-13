@@ -38,23 +38,22 @@ public class Server {
         config.setPort(9098);
         SocketIOServer server = new SocketIOServer(config);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    System.out.println("当前连接的socketClient" +  server.getAllClients());
-                    try {
-                        // sleep()：同步延迟数据，并且会阻塞线程
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    }
-            }
-        };
-
-        Thread thread = new Thread(runnable);
-        thread.start();
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true) {
+//                    System.out.println("当前连接的socketClient" +  server.getAllClients());
+//                    try {
+//                        // sleep()：同步延迟数据，并且会阻塞线程
+//                        Thread.sleep(3000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    }
+//            }
+//        };
+//        Thread thread = new Thread(runnable);
+//        thread.start();
 
         server.addEventListener(Envent.MESSAGEEVENT.toString(), Object.class, messageService);
         server.addEventListener(Envent.PACKETENVENT.toString(), byte[].class, new DataListener<byte[]>() {
@@ -66,7 +65,6 @@ public class Server {
         });
 
 
-
         server.addConnectListener(new ConnectListener() {
             @Override
             public void onConnect(SocketIOClient client) {
@@ -76,6 +74,5 @@ public class Server {
         });
         server.start();
     }
-
 
 }
